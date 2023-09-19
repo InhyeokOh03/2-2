@@ -1,0 +1,56 @@
+Part 2. Written Assignment
+
+4. Sum of First [n] Odd numbers
+
+Wrong Code : 
+==================
+#include <iostream>  //Line 1
+using namespace std;
+
+int nOddSum(int n) //Line 4
+{
+    if (n == 0) {  //Line 6
+        return 1;
+    }
+    if (n % 2 == 0) { //Line 9
+        return n; 
+    }
+    else {  // Line 12
+    int res = n + nOddSum(n - 1); 
+    return res;
+    } 
+}
+
+int main() 
+{
+    int n = 9;
+    int sum = nOddSum(n);
+    cout << "Sum of Odd Numbers = " << sum; 
+    return 0;
+}
+==================
+
+Answer :
+Line 6: Replace if (n == 0) -> if (n <= 0)
+Line 7: Replace return 1; -> return 0;
+Line 10: Replace return n; -> return nOddSum(n-1);
+Line 13: Replace int res = n + nOddSum(n - 1); -> int res = n + nOddSum(n - 2); 
+
+5. Dynamic Memory Allocation
+
+Memory allocated = (2 * 4 bytes) + (3 * 4 bytes) + (4 * 4 bytes) = 8 bytes + 12 bytes + 16 bytes = 36 bytes
+
+===========Code===========
+    // B. Implement deallocation routine
+    for (int i = 0; i < 3; i++) {
+        delete[] p_arr[i];
+    }
+    delete[] p_arr;
+===========================
+
+6. Pointer arithmetic
+
+(a) = 1
+(b) = 1
+(c) = 1
+(d) = 9 or 10
