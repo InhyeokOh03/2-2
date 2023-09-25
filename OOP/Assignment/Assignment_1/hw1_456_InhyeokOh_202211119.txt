@@ -3,7 +3,7 @@ Part 2. Written Assignment
 4. Sum of First [n] Odd numbers
 
 Wrong Code : 
-==================
+======================================================
 #include <iostream>  //Line 1
 using namespace std;
 
@@ -28,7 +28,7 @@ int main()
     cout << "Sum of Odd Numbers = " << sum; 
     return 0;
 }
-==================
+======================================================
 
 Answer :
 Line 6: Replace if (n == 0) -> if (n <= 0)
