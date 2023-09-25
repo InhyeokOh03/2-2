@@ -53,4 +53,6 @@ Memory allocated = (2 * 4 bytes) + (3 * 4 bytes) + (4 * 4 bytes) = 8 bytes + 12 
 (a) = 1
 (b) = 1
 (c) = 1
-(d) = 9 or 10
+(d) = 9
+
+! (d) can be '10' also.
