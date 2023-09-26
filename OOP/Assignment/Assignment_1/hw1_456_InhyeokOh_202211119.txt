@@ -38,7 +38,7 @@ Line 13: Replace int res = n + nOddSum(n - 1); -> int res = n + nOddSum(n - 2);
 
 5. Dynamic Memory Allocation
 
-Memory allocated = (2 * 4 bytes) + (3 * 4 bytes) + (4 * 4 bytes) = 8 bytes + 12 bytes + 16 bytes = 36 bytes
+Memory allocated = 12 + (2 * 4 bytes) + (3 * 4 bytes) + (4 * 4 bytes) = 12 bytes + 8 bytes + 12 bytes + 16 bytes = 48 bytes
 
 ===========Code===========
     // B. Implement deallocation routine

@@ -1,4 +1,4 @@
-"""
+/*
 2 - A. Explain why the code in the bottom executes successfully, while the code in the top does not?
 
 Answer : 
@@ -13,7 +13,7 @@ Answer :
 이를 통해 위의 코드는 재귀적 접근이 계속해서 함수를 호출하며 많은 메모리를 사용한다는 것을 짐작할 수 있다.
 
 결국 기본 스택의 사이즈가 제한되어 있으며 stack overflow가 일어나며 멈추게 되는 것이다.
-"""
+*/
 
 #include <iostream>
 #include <cstring>
