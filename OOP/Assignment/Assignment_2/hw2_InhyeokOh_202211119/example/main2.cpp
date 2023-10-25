@@ -114,8 +114,11 @@ void IArticlePub::NotifyAttach(IArticleSub* subscriber) {
 }
 
 void IArticlePub::NotifyAttachResponse(IArticleSub* subscriber) {
+    cout << "do notify attach response..." << endl;
+
     // 이미 구독자인지 확인
     for (int i = 0; i < numOfSub; i++) {
+        cout << "aaa" << endl;
         if (sub_list[i] == subscriber) {
             cout << "Error: Subscriber " << subscriber->getSubName() << " is already in the publisher's subscriber list." << endl;
             return;
@@ -229,12 +232,12 @@ IArticleSub::IArticleSub(const string name, IArticlePub* articlePub) {
     static int static_sub_counter = 0;
     sub_name = name;
     sub_id = ++static_sub_counter;
+    cout << "[Constructor] New Sub Created: (" << sub_name << "," << sub_id << ")" << endl;
 
     // 출판사를 구독자의 목록에 추가
     Attach(articlePub);
     
     // 정보 출력 (원하는 출력 형식 참조)
-    cout << "[Constructor] New Sub Created: (" << sub_name << "," << sub_id << ")" << endl;
 }
 
 IArticleSub::~IArticleSub() {
@@ -248,6 +251,7 @@ IArticleSub::~IArticleSub() {
 }
 
 void IArticleSub::Attach(IArticlePub* publisher) {
+    cout << "do attach..." << endl;
     // 출판사를 구독자의 목록에 추가
     pub_list[numOfPub] = publisher;
     numOfPub++;
@@ -359,7 +363,9 @@ int main() {
 
     //Jenny subscribe DGIST, BBC
     IArticleSub* jennySub = new IArticleSub("Jenny", dgistPub); 
+    cout << 'a' << endl;
     bbcPub->NotifyAttach(jennySub);
+    cout << 'a' << endl;
     cout << endl;
 
     // //Tom subscribe BBC, CNN
