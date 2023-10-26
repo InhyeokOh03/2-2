@@ -1,14 +1,17 @@
 #include <iostream>
 
+using namespace std;
+
 #include "IArticlePub.h"
 #include "IArticleSub.h"
 
+//======================================Main=============================================
 
 int main() {
     IArticlePub* dgistPub = new IArticlePub("DGIST");
     IArticlePub* bbcPub = new IArticlePub("BBC"); 
     IArticlePub* cnnPub = new IArticlePub("CNN"); 
-    cout << endl;
+    cout << endl; //OK
 
     //Jenny subscribe DGIST, BBC
     IArticleSub* jennySub = new IArticleSub("Jenny", dgistPub); 
@@ -33,9 +36,7 @@ int main() {
     cout << "All Sub of (" << bbcPub->getPubName() << "," << bbcPub->getPubID() << "): ";
     bbcPub->PrintAllSub();
 
-    cout << "All Sub of (" << cnnPub->getPubName() << "," << cnnPub->getPubID() <<
-    "): "; 
-
+    cout << "All Sub of (" << cnnPub->getPubName() << "," << cnnPub->getPubID() << "): "; 
     cnnPub->PrintAllSub(); 
     cout << endl;
 
