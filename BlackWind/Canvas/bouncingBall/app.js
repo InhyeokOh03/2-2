@@ -6,40 +6,6 @@
 //     Block
 // } from 'block.js'
 
-class App {
-    constructor() {
-        this.canvas = document.createElement('canvas');
-        this.ctx = this.canvas.getContext('2d');
-
-        document.body.appendChild(this.canvas);
-
-        window.addEventListener('resize', this.resize.bind(this), false);
-        this.resize();
-
-        this.ball = new Ball(this.stageWidth, this.stageHeight, 60, 15);
-        this.block = new Block(300, 30, 200, 200);
-
-        window.requestAnimationFrame(this.animate.bind(this));
-    }
-
-    resize() {
-        this.stageWidth = document.body.clientWidth;
-        this.stageHeight = document.body.clientHeight;
-
-        this.canvas.width = this.stageWidth * 2;
-        this.canvas.height = this.stageHeight * 2;
-        this.ctx.scale(2, 2);
-    }
-
-    animate(t) {
-        window.requestAnimationFrame(this.animate.bind(this));
-        
-        this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
-
-        this.block.draw(this.ctx);
-        this.ball.draw(this.ctx, this.stageWidth, this.stageHeight);
-    }
-}
 //---------------------------------------------------------------------------------------------------
 class Ball {
     constructor(stageWidth, stageHeight, radius, speed) {
@@ -61,10 +27,12 @@ class Ball {
 
         this.bounceBlock(block);
 
-        ctx.fillStyle = 'green';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = '#0095DD';
         ctx.fill();
+        ctx.drawPath();
+        
     }
 
     bounceWindow(stageWidth, stageHeight) {
@@ -107,7 +75,42 @@ class Ball {
         }
     }
 }
+//---------------------------------------------------------------------------------------------------
+class App {
+    constructor() {
+        this.canvas = document.createElement('canvas');
+        this.ctx = this.canvas.getContext('2d');
 
+        document.body.appendChild(this.canvas);
+
+        window.addEventListener('resize', this.resize.bind(this), false);
+        this.resize();
+
+        this.ball = new Ball(this.stageWidth, this.stageHeight, 60, 15);
+        this.block = new Block(300, 30, 200, 200);
+
+        window.requestAnimationFrame(this.animate.bind(this));
+    }
+
+    resize() {
+        this.stageWidth = document.body.clientWidth;
+        this.stageHeight = document.body.clientHeight;
+
+        this.canvas.width = this.stageWidth * 2;
+        this.canvas.height = this.stageHeight * 2;
+        this.ctx.scale(2, 2);
+    }
+
+    animate(t) {
+        window.requestAnimationFrame(this.animate.bind(this));
+        
+        this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
+
+        this.block.draw(this.ctx);
+        this.ball.draw(this.ctx, this.stageWidth, this.stageHeight);
+    }
+}
+//---------------------------------------------------------------------------------------------------
 class Block {
     constructor(width, height, x, y) {
         this.width = width;
