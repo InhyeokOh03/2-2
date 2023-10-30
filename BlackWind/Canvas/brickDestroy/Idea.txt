@@ -1,0 +1,8 @@
+1. Bricks could be broke.              -> Brick class
+2. Player can remote the bar.          -> Bar class 
+3. Ball can interact with others.      -> Ball class
+
+Player -> Bar <-> Ball <-> Brick
+
+Item? - multiply Ball   
+      ㄴ ...
