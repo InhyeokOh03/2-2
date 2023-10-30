@@ -41,6 +41,7 @@ class Ball {
     }
 
     bounceBlock(block) {
+        // this.radius += 1
         const minX = block.x - this.radius;
         const maxX = block.maxX + this.radius;
         const minY = block.y - this.radius;
@@ -56,9 +57,11 @@ class Ball {
             const min = Math.min(min1, min2);
 
             if (min == min1) {
+                this.radius += 1
                 this.vx *= -1;
                 this.x += this.vx;
             } else if (min == min2) {
+                this.radius += 1
                 this.vy *= -1;
                 this.y += this.vy;
             }
@@ -112,8 +115,9 @@ class App {
         window.addEventListener('resize', this.resize.bind(this), false);
         this.resize();
 
-        
-        this.makeBall(30, 30);
+        this.radius = 10
+        this.speed = 20
+        this.makeBall(this.radius, this.speed);
         this.block = new Block(300, 30, 200, 200);
 
         window.requestAnimationFrame(this.animate.bind(this));
