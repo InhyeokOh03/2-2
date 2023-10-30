@@ -1,12 +1,3 @@
-// import  {
-//     Ball
-// } from 'ball.js';
-
-// import {
-//     Block
-// } from 'block.js'
-
-//---------------------------------------------------------------------------------------------------
 class Ball {
     constructor(stageWidth, stageHeight, radius, speed) {
         this.radius = radius;
@@ -19,20 +10,19 @@ class Ball {
         this.y = diameter + (Math.random() * stageHeight - diameter);
     }
 
-    draw(ctx, stageWidth, stageHeight) {
+    draw(ctx, stageWidth, stageHeight, Block) {
         this.x += this.vx;
         this.y += this.vy;
 
         this.bounceWindow(stageWidth, stageHeight);
 
-        this.bounceBlock(block);
+        this.bounceBlock(Block);
 
+        ctx.fillStyle = '#0095DD';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = '#0095DD';
         ctx.fill();
-        ctx.drawPath();
-        
+
     }
 
     bounceWindow(stageWidth, stageHeight) {
@@ -75,42 +65,6 @@ class Ball {
         }
     }
 }
-//---------------------------------------------------------------------------------------------------
-class App {
-    constructor() {
-        this.canvas = document.createElement('canvas');
-        this.ctx = this.canvas.getContext('2d');
-
-        document.body.appendChild(this.canvas);
-
-        window.addEventListener('resize', this.resize.bind(this), false);
-        this.resize();
-
-        this.ball = new Ball(this.stageWidth, this.stageHeight, 60, 15);
-        this.block = new Block(300, 30, 200, 200);
-
-        window.requestAnimationFrame(this.animate.bind(this));
-    }
-
-    resize() {
-        this.stageWidth = document.body.clientWidth;
-        this.stageHeight = document.body.clientHeight;
-
-        this.canvas.width = this.stageWidth * 2;
-        this.canvas.height = this.stageHeight * 2;
-        this.ctx.scale(2, 2);
-    }
-
-    animate(t) {
-        window.requestAnimationFrame(this.animate.bind(this));
-        
-        this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
-
-        this.block.draw(this.ctx);
-        this.ball.draw(this.ctx, this.stageWidth, this.stageHeight);
-    }
-}
-//---------------------------------------------------------------------------------------------------
 class Block {
     constructor(width, height, x, y) {
         this.width = width;
@@ -145,6 +99,46 @@ class Block {
         // ctx.lineTo(this.x - xGap, this.maxY + yGap);
         // ctx.lineTo(this.x - xGap, this.maxY + yGap - this.height);
         // ctx.fill();
+    }
+}
+//---------------------------------------------------------------------------------------------------
+class App {
+    constructor() {
+        this.canvas = document.createElement('canvas');
+        this.ctx = this.canvas.getContext('2d');
+
+        document.body.appendChild(this.canvas);
+
+        window.addEventListener('resize', this.resize.bind(this), false);
+        this.resize();
+
+        
+        this.makeBall(30, 30);
+        this.block = new Block(300, 30, 200, 200);
+
+        window.requestAnimationFrame(this.animate.bind(this));
+    }
+
+    resize() {
+        this.stageWidth = document.body.clientWidth;
+        this.stageHeight = document.body.clientHeight;
+
+        this.canvas.width = this.stageWidth * 2;
+        this.canvas.height = this.stageHeight * 2;
+        this.ctx.scale(2, 2);
+    }
+
+    makeBall(radius, speed) {
+        this.ball = new Ball(this.stageWidth, this.stageHeight, radius, speed);
+    }
+
+    animate() {
+        window.requestAnimationFrame(this.animate.bind(this));
+        
+        this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
+
+        this.block.draw(this.ctx);
+        this.ball.draw(this.ctx, this.stageWidth, this.stageHeight, this.block);
     }
 }
 //---------------------------------------------------------------------------------------------------
