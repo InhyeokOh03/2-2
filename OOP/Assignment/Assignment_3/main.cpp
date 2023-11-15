@@ -72,9 +72,13 @@ class dgist_press: public IArticlePub {
     ~dgist_press();
 };
 
-dgist_press::dgist_press(): IArticlePub("DGIST Press") {}
+dgist_press::dgist_press(): IArticlePub("DGIST") {
+    cout << "dgist press constructor1 is called" << endl;
+}
 
-dgist_press::dgist_press(const string con): IArticlePub("DGIST Press", con) {}
+dgist_press::dgist_press(const string con): IArticlePub("DGIST", con) {
+    cout << "dgist press constructor2 is called" << endl;
+}
 
 void dgist_press::Event() {
     cout << "The Event is totally swindle" << endl;
@@ -87,7 +91,7 @@ void dgist_press::CheerUp() {
 }
 
 dgist_press::~dgist_press() {
-    cout << "DGIST Press Destructor called" << endl;
+    cout << "DGIST PRESS is destructed" << endl;
 }
 
 class BBC: public IArticlePub {
@@ -99,9 +103,13 @@ class BBC: public IArticlePub {
         ~BBC();
 };
 
-BBC::BBC(): IArticlePub("BBC") {}
+BBC::BBC(): IArticlePub("BBC") {
+    cout << "BBC constructor1 is called" << endl;
+}
 
-BBC::BBC(const string con): IArticlePub("BBC", con) {}
+BBC::BBC(const string con): IArticlePub("BBC", con) {
+    cout << "BBC constructor2 is called" << endl;
+}
 
 void BBC::Event() {
     if (numOfSub > 0) {
@@ -117,7 +125,7 @@ void BBC::Advertisement() {
 }
 
 BBC::~BBC() {
-    cout << "BBC Destructor called" << endl;
+    cout << "BBC is destructed" << endl;
 }
 
 class CNN: public IArticlePub {
@@ -128,9 +136,13 @@ class CNN: public IArticlePub {
         ~CNN();
 };
 
-CNN::CNN():IArticlePub("CNN") {}
+CNN::CNN():IArticlePub("CNN") {
+    cout << "CNN constructor1 is called" << endl;
+}
 
-CNN::CNN(const string con): IArticlePub("CNN", con) {}
+CNN::CNN(const string con): IArticlePub("CNN", con) {
+    cout << "CNN constructor2 is called" << endl;
+}
 
 void CNN::Event() {
     if (numOfSub > 0) {
@@ -142,7 +154,7 @@ void CNN::Event() {
 }
 
 CNN::~CNN() {
-    cout << "CNN Destructor called" << endl;
+    cout << "CNN is destructed" << endl;
 }
 
 int IArticleSub::static_sub_counter = 0;
@@ -291,13 +303,13 @@ IArticleSub::IArticleSub(const string name) {
     sub_name = name;
     sub_id = ++static_sub_counter;
 
-    cout << "[Constructor] New Sub Created: (" << sub_name << "," << sub_id << ")" << endl;
+    cout << "[Constructor]New Sub Created: (" << sub_name << "," << sub_id << ")" << endl;
 }
 
 IArticleSub::IArticleSub(const string name, IArticlePub* articlePub) {
     sub_name = name;
     sub_id = ++static_sub_counter;
-    cout << "[Constructor] New Sub Created: (" << sub_name << "," << sub_id << ")" << endl;
+    cout << "[Constructor]New Sub Created: (" << sub_name << "," << sub_id << ")" << endl;
 
     Attach(articlePub);
 }
