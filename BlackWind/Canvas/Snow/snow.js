@@ -5,11 +5,11 @@ export class SnowParticle {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.rgb = rgb;
+        // this.rgb = rgb;
         
-        this.vx = Math.random() * 4;
+        // this.vx = Math.random() * 4;
         this.vy = Math.random() * 4;
-
+        
         this.sinValue = Math.random();
     }
 
@@ -25,16 +25,15 @@ export class SnowParticle {
         //     this.vx *= -1;
         //     this.x += 10;
         // }
-        // else if (this.x > stageWidth) {
-        //     this.vx *= -1;
-        //     this.x -= 10;
-        // }
+        if (this.y > stageHeight + 10) {
+            this.y = -10;
+        }
 
-        // if (this.y < 0) {
+        // if (this.y > stageHeight) {
         //     this.vy *= -1;
         //     this.y += 10;
         // }
-        // else if (this.y > stageHeight) {
+        // // else if (this.y > stageHeight) {
         //     this.vy *= -1;
         //     this.y -= 10;
         // }

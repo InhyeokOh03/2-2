@@ -7,7 +7,10 @@ const COLORS = [
     {r: 255, g: 104, b: 248}, // pupple
     {r: 44, g: 209, b: 252}, // skyblue
     {r: 54, g: 233, b: 84}, // green
+    {r: 255, g: 255, b: 255} // white
 ];
+
+// let frame = 0;
 
 class App {
     constructor(){
@@ -17,7 +20,7 @@ class App {
 
         this.pixelRatio = (window.devicePixelRatio > 1) ? 2 : 1;
 
-        this.totalParticles = 15;
+        this.totalParticles = 100;
         this.particles = [];
         this.maxRadius = 900;
         this.minRadius = 400;
@@ -38,7 +41,7 @@ class App {
 
         this.ctx.globalCompositeOperation = 'saturation';
 
-        this.createParticles();
+        // this.createParticles();
         this.createSnow();
     }
 
@@ -64,14 +67,14 @@ class App {
     }
 
     createSnow() {
-        let curColor = 0;
         this.particles = [];
 
         for (let i = 0; i < this.totalParticles; i++) {
             const item = new SnowParticle(
                 Math.random() * this.stageWidth,
-                Math.random() * this.stageHeight,
-                30,
+                -100,
+                10,
+                COLORS[5]
             );
 
             this.particles[i] = item;
