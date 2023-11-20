@@ -12,6 +12,26 @@ const COLORS = [
 
 // let frame = 0;
 
+class Block {
+    constructor(width, height, x, y) {
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+        this.maxX = width + x;
+        this.maxY = height + y;
+    }
+    
+    draw(ctx) {
+        const xGap = 80;
+        const yGap = 60;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fill();
+    }
+}
 class App {
     constructor(){
         this.canvas = document.createElement('canvas');
@@ -20,13 +40,20 @@ class App {
 
         this.pixelRatio = (window.devicePixelRatio > 1) ? 2 : 1;
 
-        this.totalParticles = 100;
+        this.totalParticles = 150;
         this.particles = [];
         this.maxRadius = 900;
         this.minRadius = 400;
 
         window.addEventListener('resize', this.resize.bind(this), false);
         this.resize();
+        this.block = new Block(this.stageWidth, 50, 0, this.stageHeight / 2);
+        this.block2 = new Block(50, this.stageHeight, this.stageWidth / 2, 0);
+
+        this.block3 = new Block(this.stageWidth, 25, 0, 0);
+        this.block4 = new Block(25, this.stageHeight, 0, 0);
+        this.block5 = new Block(-this.stageWidth, -25, this.stageWidth, this.stageHeight);
+        this.block6 = new Block(-25, -this.stageHeight, this.stageWidth, this.stageHeight);
 
         window.requestAnimationFrame(this.animate.bind(this));
     }
@@ -90,9 +117,15 @@ class App {
             const item = this.particles[i];
             item.animate(this.ctx, this.stageWidth, this.stageHeight);
         }
+        this.block.draw(this.ctx);
+        this.block2.draw(this.ctx);
+        this.block3.draw(this.ctx);
+        this.block4.draw(this.ctx);
+        this.block5.draw(this.ctx);
+        this.block6.draw(this.ctx);
+
     }
 }
-
 
 
 window.onload = () => {
