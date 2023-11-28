@@ -15,9 +15,7 @@ class IArticlePub {
         static int static_pub_counter;
     //new
     protected:
-        vector<IArticleSub*> sub list;
-        // IArticleSub* sub_list[5]; 
-        // int numOfSub = 0; 
+        vector<IArticleSub*> sub_list;
     
     public:
         IArticlePub(const string name);
@@ -47,8 +45,6 @@ class IArticleSub {
         static int static_sub_counter;
     //new
     protected:
-        // IArticlePub* pub_list[5];
-        // int numOfPub = 0;
         vector<IArticlePub*> pub_list;
 
     public:
@@ -91,7 +87,7 @@ void dgist_press::Event() {
 }
 
 void dgist_press::CheerUp() {
-    for (int i = 0; i < numOfSub; i++) {
+    for (int i = 0; i < sub_list.size(); i++) {
         sub_list[i]->Update(this, "I Love you guys");
     }
 }
@@ -118,7 +114,7 @@ BBC::BBC(const string con): IArticlePub("BBC", con) {
 }
 
 void BBC::Event() {
-    if (numOfSub > 0) {
+    if (sub_list.size() > 0) {
         int winner_index = 0;
         cout << "The Event winner is (" << sub_list[winner_index]->getSubName() << "," << sub_list[winner_index]->getSubID() << ")" << endl;
     } else {
@@ -151,8 +147,8 @@ CNN::CNN(const string con): IArticlePub("CNN", con) {
 }
 
 void CNN::Event() {
-    if (numOfSub > 0) {
-        int winner_index = numOfSub - 1;
+    if (sub_list.size() > 0) {
+        int winner_index = sub_list.size() - 1;
         cout << "The Event winner is (" << sub_list[winner_index]->getSubName() << "," << sub_list[winner_index]->getSubID() << ")" << endl;
     } else {
         cout << "Error: No subscribers for the event." << endl;
@@ -173,7 +169,6 @@ IArticlePub::IArticlePub(const string name) : pub_name(name) {
     static_pub_counter++;
     pub_id = static_pub_counter;
     recent_contents = "";
-    numOfSub = 0;
 
     cout << "[Constructor] New Pub Created: (" << pub_name << "," << pub_id << ")" << endl;
 }
@@ -181,21 +176,20 @@ IArticlePub::IArticlePub(const string name) : pub_name(name) {
 IArticlePub::IArticlePub(const string name, const string con) : pub_name(name), recent_contents(con) {
     static_pub_counter++;
     pub_id = static_pub_counter;
-    numOfSub = 0;
 
     cout << "[Constructor] New Pub Created: (" << pub_name << "," << pub_id << ")" << endl;
 }
 
 IArticlePub::~IArticlePub() {
     cout << "IArticlePub Destructor called" << endl;
-    for (int i = 0; i < numOfSub; i++) {
+    for (int i = 0; i < sub_list.size(); i++) {
         sub_list[i]->DetachResponse(this);
     }
 }
 
 void IArticlePub::NotifyAttach(IArticleSub* subscriber) {
     // Are you subscriber?
-    for (int i = 0; i < numOfSub; i++) {
+    for (int i = 0; i < sub_list.size(); i++) {
         if (sub_list[i] == subscriber) {
             cout << "Error: Subscriber " << subscriber->getSubName() << " is already in the publisher's subscriber list." << endl;
             return;
@@ -203,9 +197,9 @@ void IArticlePub::NotifyAttach(IArticleSub* subscriber) {
     }
 
     // Add neww subscriber
-    if (numOfSub < 5) { // under 5
-        sub_list[numOfSub] = subscriber;
-        numOfSub++;
+    if (sub_list.size() < 5) { // under 5
+        sub_list.push_back(subscriber);
+
 
         cout << "[Attach] Sub (" << subscriber->getSubName() << "," << subscriber->getSubID() << ") is attached to Pub (" << pub_name << "," << pub_id << ")" << endl;
         subscriber->AttachResponse(this);
@@ -215,18 +209,15 @@ void IArticlePub::NotifyAttach(IArticleSub* subscriber) {
 }
 
 void IArticlePub::NotifyAttachResponse(IArticleSub* subscriber) {
-    // Are you subscriber?
-    for (int i = 0; i < numOfSub; i++) {
+    for (int i = 0; i < sub_list.size(); i++) {
         if (sub_list[i] == subscriber) {
             cout << "Error: Subscriber " << subscriber->getSubName() << " is already in the publisher's subscriber list." << endl;
             return;
         }
     }
-
     // Add new subscriber
-    if (numOfSub < 5) { // under 5.
-        sub_list[numOfSub] = subscriber;
-        numOfSub++;
+    if (sub_list.size() < 5) { // under 5.
+        sub_list.push_back(subscriber);
         cout << "[Attach] Sub (" << subscriber->getSubName() << "," << subscriber->getSubID() << ") is attached to Pub (" << pub_name << "," << pub_id << ")" << endl;
     } else {
         cout << "Error: Maximum number of subscribers reached for the publisher." << endl;
@@ -236,14 +227,14 @@ void IArticlePub::NotifyAttachResponse(IArticleSub* subscriber) {
 void IArticlePub::NotifyDetach(IArticleSub* subscriber) {
     bool found = false;
 
-    for (int i = 0; i < numOfSub; i++) {
+    for (int i = 0; i < sub_list.size(); i++) {
         if (sub_list[i] == subscriber) {
             found = true;
 
-            for (int j = i; j < numOfSub - 1; j++) {
+            for (int j = i; j < sub_list.size() - 1; j++) {
                 sub_list[j] = sub_list[j + 1];
             }
-            numOfSub--;
+            sub_list.pop_back();
             subscriber->DetachResponse(this);
             cout << "[Detach] Sub (" << subscriber->getSubName() << "," << subscriber->getSubID() << ") is detached from Pub (" << pub_name << "," << pub_id << ")" << endl;
         }
@@ -256,14 +247,15 @@ void IArticlePub::NotifyDetach(IArticleSub* subscriber) {
 void IArticlePub::NotifyDetachResponse(IArticleSub* subscriber) {
     bool found = false;
 
-    for (int i = 0; i < numOfSub; i++) {
+    for (int i = 0; i < sub_list.size(); i++) {
         if (sub_list[i] == subscriber) {
             found = true;
 
-            for (int j = i; j < numOfSub - 1; j++) {
+            for (int j = i; j < sub_list.size() - 1; j++) {
                 sub_list[j] = sub_list[j + 1];
             }
-            numOfSub--;
+            sub_list.pop_back();
+            subscriber->DetachResponse(this);
             cout << "[Pub] (" << pub_name << "," << pub_id << ") detach [Sub] (" << subscriber->getSubName() << "," << subscriber->getSubID() << ")" << endl;
         }
     }
@@ -278,7 +270,7 @@ void IArticlePub::updatePubContents(string c) {
 }
 
 void IArticlePub::Notify() {
-    for (int i = 0; i < numOfSub; i++) {
+    for (int i = 0; i < sub_list.size(); i++) {
         sub_list[i]->Update(this, recent_contents);
     }
 }
@@ -292,12 +284,12 @@ string IArticlePub::getPubName() {
 }
 
 int IArticlePub::getSubSize() {
-    return numOfSub;
+    return sub_list.size();
 }
 
 void IArticlePub::PrintAllSub() {
     // cout << "All Sub of (" << pub_name << "," << pub_id << "): ";
-    for (int i = 0; i < numOfSub; i++) {
+    for (int i = 0; i < sub_list.size(); i++) {
         cout << "[" << sub_list[i]->getSubName() << "," << sub_list[i]->getSubID() << "]";
     }
     cout << endl;
@@ -329,38 +321,33 @@ IArticleSub::IArticleSub(const string name, IArticlePub* articlePub) {
 IArticleSub::~IArticleSub() {
     cout << "IArticleSub Destructor called" << endl;
 
-    for (int i = 0; i < numOfPub; i++) {
+    for (int i = 0; i < pub_list.size(); i++) {
         pub_list[i]->NotifyDetachResponse(this);
     }
 }
 
 void IArticleSub::Attach(IArticlePub* publisher) {
-    pub_list[numOfPub] = publisher;
-    numOfPub++;
+    pub_list.push_back(publisher);
     cout << "[Attach] Pub (" << publisher->getPubName() << "," << publisher->getPubID() << ") is attached to Sub (" << sub_name << "," << sub_id << ")" << endl;
     publisher->NotifyAttachResponse(this);
 }
 
 void IArticleSub::AttachResponse(IArticlePub* publisher) {
-    pub_list[numOfPub] = publisher;
-    numOfPub++;
+    pub_list.push_back(publisher);
 cout << "[Attach] Pub (" << publisher->getPubName() << "," << publisher->getPubID() << ") is attached to Sub (" << sub_name << "," << sub_id << ")" << endl;
 }   
 
 void IArticleSub::Detach(IArticlePub* p_pub) {
     int index = -1;
     // remove
-    for (int i = 0; i < numOfPub; i++) {
+    for (int i = 0; i < pub_list.size(); i++) {
         if (pub_list[i] == p_pub) {
             index = i;
             break;
         }
     }
     if (index != -1) {
-        for (int i = index; i < numOfPub - 1; i++) {
-            pub_list[i] = pub_list[i + 1];
-        }
-        numOfPub--;
+        pub_list.erase(pub_list.begin() + index);
         cout << "[Sub] (" << sub_name << "," << sub_id << ") unsubscribes [Pub] (" << p_pub->getPubName() << "," << p_pub->getPubID() << ")" << endl;
 
         p_pub->NotifyDetachResponse(this);
@@ -372,17 +359,12 @@ void IArticleSub::Detach(IArticlePub* p_pub) {
 void IArticleSub::DetachResponse(IArticlePub* p_pub) {
         int index = -1;
     
-    for (int i = 0; i < numOfPub; i++) {
-        if (pub_list[i] == p_pub) {
-            index = i;
-            break;
-        }
+    auto it = find(pub_list.begin(), pub_list.end(), p_pub);
+    if (it != pub_list.end()) {
+        index = distance(pub_list.begin(), it);
     }
     if (index != -1) {
-        for (int i = index; i < numOfPub - 1; i++) {
-            pub_list[i] = pub_list[i + 1];
-        }
-        numOfPub--;
+        pub_list.erase(pub_list.begin() + index);
         cout << "[Sub] (" << sub_name << "," << sub_id << ") unsubscribes [Pub] (" << p_pub->getPubName() << "," << p_pub->getPubID() << ")" << endl;
     } else {
         cout << "Error: There is no publisher in subscribed list." << endl;
@@ -409,11 +391,11 @@ int IArticleSub::getSubID() {
 }
 
 int IArticleSub::getPubSize() {
-    return numOfPub;
+    return pub_list.size();
 }
 
 void IArticleSub::PrintAllPub() {
-    for (int i = 0; i < numOfPub; i++) {
+    for (int i = 0; i < pub_list.size(); i++) {
         cout << "[" << pub_list[i]->getPubName() << "," << pub_list[i]->getPubID() << "]";
     }
     cout << endl;
