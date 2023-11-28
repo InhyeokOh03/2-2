@@ -297,7 +297,7 @@ void IArticlePub::PrintAllSub() {
 
 IArticlePub& IArticlePub::operator<<(const string& newContents) {
     updatePubContents(newContents); // 내용 업데이트
-    Notify(); // 모든 구독자에게 알림
+    // Notify(); // 모든 구독자에게 알림
     return *this;
 }
 
@@ -463,7 +463,8 @@ int main(){
     *bbcPub << "Mr. Son scored at Tottenham"; //Operator Overloading
 
     cout << "=========CNN Notify ===========" << endl;
-    *cnnPub << "New York city celebrates Christmas"; //Operator Overloading
+    *cnnPub << "New York city celebrates Christmas"; //Operator Overloading 
+    //==========================DONE=====================================
 
     cout << "=========DELETING [tomSub]===========" << endl;
     delete tomSub;
