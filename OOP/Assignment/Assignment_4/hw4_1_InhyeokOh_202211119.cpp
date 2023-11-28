@@ -247,18 +247,16 @@ void IArticlePub::NotifyDetach(IArticleSub* subscriber) {
 void IArticlePub::NotifyDetachResponse(IArticleSub* subscriber) {
     bool found = false;
 
-    for (int i = 0; i < sub_list.size(); i++) {
-        if (sub_list[i] == subscriber) {
+    for (auto iter = sub_list.begin(); iter != sub_list.end(); ++iter) {
+        if (*iter == subscriber) {
             found = true;
-
-            for (int j = i; j < sub_list.size() - 1; j++) {
-                sub_list[j] = sub_list[j + 1];
-            }
-            sub_list.pop_back();
+            sub_list.erase(iter);
             subscriber->DetachResponse(this);
             cout << "[Pub] (" << pub_name << "," << pub_id << ") detach [Sub] (" << subscriber->getSubName() << "," << subscriber->getSubID() << ")" << endl;
+            break; // subscriber를 찾았으니 루프 종료
         }
     }
+    
     if (!found) {
         cout << "Error: Subscriber " << subscriber->getSubName() << " is not in the publisher's subscriber list." << endl;
     }
@@ -366,9 +364,9 @@ void IArticleSub::Detach(IArticlePub* p_pub) {
 void IArticleSub::DetachResponse(IArticlePub* p_pub) {
         int index = -1;
     
-    auto it = find(pub_list.begin(), pub_list.end(), p_pub);
-    if (it != pub_list.end()) {
-        index = distance(pub_list.begin(), it);
+    auto iter = find(pub_list.begin(), pub_list.end(), p_pub);
+    if (iter != pub_list.end()) {
+        index = distance(pub_list.begin(), iter);
     }
     if (index != -1) {
         pub_list.erase(pub_list.begin() + index);
