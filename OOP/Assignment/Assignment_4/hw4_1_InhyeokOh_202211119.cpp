@@ -374,7 +374,7 @@ void IArticleSub::DetachResponse(IArticlePub* p_pub) {
         pub_list.erase(pub_list.begin() + index);
         cout << "[Sub] (" << sub_name << "," << sub_id << ") unsubscribes [Pub] (" << p_pub->getPubName() << "," << p_pub->getPubID() << ")" << endl;
     } else {
-        cout << "Error: There is no publisher in subscribed list." << endl;
+        // cout << "Error: There is no publisher in subscribed list." << endl;
     }
 }
 
@@ -444,8 +444,8 @@ int main(){
     cnnPub->PrintAllSub();
 
     bbcPub->Event();
-    dgistPub->CheerUp();
-    kateSub->Detach(bbcPub);
+    dgistPub->CheerUp(); //done
+    kateSub->Detach(bbcPub); 
     
     cout << "All Pub of (" << jennySub->getSubName() << "," << jennySub->getSubID() << "):";
     jennySub->PrintAllPub();
