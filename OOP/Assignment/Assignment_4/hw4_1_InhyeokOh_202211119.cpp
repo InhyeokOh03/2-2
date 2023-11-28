@@ -327,6 +327,13 @@ IArticleSub::~IArticleSub() {
 }
 
 void IArticleSub::Attach(IArticlePub* publisher) {
+    for (const auto& pub : pub_list) {
+        if (pub == publisher) {
+            cout << "[ERROR]: already subscribes " << publisher->getPubName() << endl;
+            return;
+        }
+    }
+
     pub_list.push_back(publisher);
     cout << "[Attach] Pub (" << publisher->getPubName() << "," << publisher->getPubID() << ") is attached to Sub (" << sub_name << "," << sub_id << ")" << endl;
     publisher->NotifyAttachResponse(this);
