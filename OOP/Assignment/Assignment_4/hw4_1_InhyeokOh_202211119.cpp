@@ -408,12 +408,12 @@ IArticleSub& IArticleSub::operator>>(IArticlePub* newPub) {
 
 //======================================Main=============================================
 int main(){
-    dgist_press* dgistPub = new dgist_press(string("this is dgist pub"));
-    BBC* bbcPub = new BBC();
-    CNN* cnnPub = new CNN();
+    dgist_press* dgistPub = new dgist_press(string("this is dgist pub")); //ok
+    BBC* bbcPub = new BBC(); //ok
+    CNN* cnnPub = new CNN(); //ok
 
     //Jenny subscribe DGIST, BBC
-    IArticleSub* jennySub = new IArticleSub("Jenny", dgistPub);
+    IArticleSub* jennySub = new IArticleSub("Jenny", dgistPub); //ok
     *jennySub >> bbcPub; //Operator Overloading
 
     //Tom subscribe BBC, CNN
