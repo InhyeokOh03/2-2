@@ -251,7 +251,7 @@ void IArticlePub::NotifyDetachResponse(IArticleSub* subscriber) {
         if (*iter == subscriber) {
             found = true;
             sub_list.erase(iter);
-            subscriber->DetachResponse(this);
+            // subscriber->DetachResponse(this);
             cout << "[Pub] (" << pub_name << "," << pub_id << ") detach [Sub] (" << subscriber->getSubName() << "," << subscriber->getSubID() << ")" << endl;
             break; // subscriber를 찾았으니 루프 종료
         }
